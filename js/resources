@@ -1,0 +1,125 @@
+let testApp = angular.module('myTestApp', ['ngRoute']);
+
+testApp.provider('date', function () {
+    let greet;
+    return {
+        setGreeting: function(value){
+            greet = value;
+        },
+        $get: function () {
+            return {
+                showDate: function () {
+                    let date = new Date();
+                    return "Hi" + greet + ' ' + date.getHours();
+                }
+            }
+        }
+    }
+})
+testApp.config(function(dateProvider){
+    let time = dateProvider.$get().showDate();
+    let time2 = time.substring(time.length, time.length-2);
+    let time3 = parseInt(time2, 10)
+  
+    if(time3 == 15){
+        console.log('waaaaw');
+    }
+
+    if( time3 > 12 && time3 < 16){
+        dateProvider.setGreeting('good afternoon');
+    }
+    else {
+        dateProvider.setGreeting(' omg some other message');
+        //console.log(time);
+    }
+});
+
+testApp.controller('myController', function ($scope, date) {
+
+    $scope.greetMessage = date.showDate();
+});
+
+
+
+//------------------------------------------------------------
+
+
+//Below is an example of provider
+// let testApp = angular.module('myTestApp', ['ngRoute']);
+
+// testApp.config(function ($routeProvider) {
+
+//     $routeProvider
+
+//         .when('/', {
+//             template: '<h1>Welcome Arun</h1>'
+//         })
+//         .when('/anotherPage', {
+//             template: '<h1> Welcome, some other message</h1>'
+//         })
+//         .otherwise({
+//             redirectTo: '/'
+//         });
+// });
+
+// testApp.provider('date', function () {
+//     return {
+//         $get: function () {
+//             return {
+//                 showDate: function () {
+//                     let date = new Date();
+//                     return date.getHours();
+//                 }
+//             }
+//         }
+//     }
+// })
+// testApp.controller('myController', function ($scope, date) {
+
+//     $scope.greetMessage = date.showDate();
+
+// });
+
+
+
+//---------------------------------------------------------
+
+
+//Below is an example of Factory
+// let testApp = angular.module('myTestApp', []);
+
+// testApp.factory('myFactory', function () {
+//     let randomObject = {};
+//     randomObject.myFactoryMethod = function () {
+//         let consOut = 'some string'
+//         return consOut;
+//     };
+//     return randomObject;
+// });
+
+// testApp.controller('myController', function ($scope, myFactory) {
+
+//     $scope.tempVar = myFactory.myFactoryMethod();
+//     console.log($scope.tempVar);
+// });
+
+
+//-------------------------------------------------------
+
+
+//Below is an example of Service
+// let testApp = angular.module('myTestApp', []);
+
+// testApp.service('myService', function () {
+//     this.myServiceMethod = function () {
+//         let consOut = 'some string'
+//         return consOut;
+//     };
+// });
+
+// testApp.controller('myController', function($scope, myService) {
+//     $scope.onePlusOne = 2;
+//     console.log($scope.onePlusOne);
+//     $scope.tempVar = myService.myServiceMethod();
+//     console.log($scope.tempVar);
+// });

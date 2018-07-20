@@ -1,0 +1,21 @@
+<!-- <form ng-submit='registerUser(newUser)' name='form'> -->
+
+    <h1>Angular Note Application</h1>
+           <span class="icons">
+        <i class="fa fa-plus-circle fa-2x" ng-click="addNote()"></i>
+      </span>
+      <div class="note" ng-repeat="note in notes | orderBy:'createdOn':true track by $index">
+        <span class="date">{{note.createdOn | date:"EEEE dd MMMM, yyyy 'at' h:mma"}}</span>
+        <span class="icons">
+          <i class="fa fa-check fa-lg" ng-if="note.edit == false"></i>
+          <i class="fa fa-pencil fa-lg" ng-if="note.edit == true"></i>
+          <i class="fa fa-trash-o fa-lg" ng-click="delete(notes.length - $index - 1)"></i>
+        </span>
+
+        <div class="markdown-body" ng-model="note.text" ng-change="update(notes.length - $index - 1,note.text)" ng-focus="note.edit = true"
+          ng-blur="note.edit = false" markdown-editable contenteditable="true">{{ note.text }}</div>
+      </div>
+
+<p></p>
+
+<child-comp notes-two="$ctrl.notesTwo"></child-comp>
